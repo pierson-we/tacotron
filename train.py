@@ -121,10 +121,10 @@ def train(log_dir, args):
             info='%s, %s, %s, step=%d, loss=%.5f' % (args.model, commit, time_string(), step, loss))
           log('Input: %s' % sequence_to_text(input_seq))
           if args.slack_url != '':
-            cmd = 'curl -F file=@%s -H "Authorization: Bearer xoxb-447699810339-447680344836-l9MSOu5h1NgPambAgN7tFnjo" -F channels=#tensorflow https://slack.com/api/files.upload' % os.path.join(log_dir, 'step-%d-audio.wav')
+            cmd = 'curl -F file=@%s -H "Authorization: Bearer xoxb-447699810339-447680344836-l9MSOu5h1NgPambAgN7tFnjo" -F channels=#tensorflow https://slack.com/api/files.upload' % os.path.join(log_dir, 'step-%d-audio.wav' % step)
             p = subprocess.Popen(cmd, shell=True)
             p.wait()
-            cmd = 'curl -F file=@%s -H "Authorization: Bearer xoxb-447699810339-447680344836-l9MSOu5h1NgPambAgN7tFnjo" -F channels=#tensorflow https://slack.com/api/files.upload' % os.path.join(log_dir, 'step-%d-audio.png')
+            cmd = 'curl -F file=@%s -H "Authorization: Bearer xoxb-447699810339-447680344836-l9MSOu5h1NgPambAgN7tFnjo" -F channels=#tensorflow https://slack.com/api/files.upload' % os.path.join(log_dir, 'step-%d-audio.png' % step)
             p = subprocess.Popen(cmd, shell=True)
             p.wait()
 
