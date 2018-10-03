@@ -22,6 +22,7 @@ def vtt2srt(file):
 
 def parse_srt(seg_dict, file, min_duration):
 	seg_dict[file] = {}
+	speakers = []
 	with open(file, 'r') as f:
 		lines = f.readlines()
 	lines = [line.replace('\n', '') for line in lines]
@@ -51,12 +52,24 @@ def parse_srt(seg_dict, file, min_duration):
 		else:
 			next_index = len(lines) - 1
 		seg_dict[file][count]['text'] = [line.split(':')[-1] for line in lines[index + 2:next_index]]
+		speakers += [line.split(':')[0] for line in lines[index + 2:next_index] if line.find(':') != -1]
 		while '' in seg_dict[file][count]['text']:
 			seg_dict[file][count]['text'].remove('')
 		seg_dict[file][count]['text'] = ' '.join(seg_dict[file][count]['text'])
 		if seg_dict[file][count]['text'].replace(' ', '') == '' or (to_sec - from_sec) < min_duration:
 			del seg_dict[file][count]
 		count += 1
+	speakers = [speaker for speaker in speakers if speaker.strip() != '']
+	if len(list(set(speakers))) > 1:
+		max_occ = 3
+		actual_speakers = []
+		for speaker in list(set(speakers)):
+			occ = speakers.count(speaker)
+			if occ > max_occ:
+				actual_speakers.append(speaker)
+		if len(actual_speakers) > 1:
+			print('Multiple Speakers Detected, skipping: %s' % file)
+			del(seg_dict[file])
 	return seg_dict
 
 def text_overlap(text1, text2):
