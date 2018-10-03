@@ -14,6 +14,7 @@ def download(url):
 		p.wait()
 	else:
 		print('%s already downloaded' % url)
+		sys.stdout.flush()
 
 def vtt2srt(file):
 	out_file = file.split('.en.vtt')[0] + '.srt'
