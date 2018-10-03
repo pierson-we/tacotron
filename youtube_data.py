@@ -12,6 +12,8 @@ def download(url):
 		cmd = cmd.split(' ')
 		p = subprocess.Popen(cmd)
 		p.wait()
+	else:
+		print('%s already downloaded' % url)
 
 def vtt2srt(file):
 	out_file = file.split('.en.vtt')[0] + '.srt'
