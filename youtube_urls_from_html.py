@@ -19,7 +19,7 @@ while i != -1:
 	video_ids.append(text[i+len(search_text):stop_pos])
 	pos = i+1
 
-video_ids = ['https://www.youtube.com/watch?v=%s' % video_id for video_id in video_ids]
+video_ids = ['https://www.youtube.com/watch?v=%s' % video_id for video_id in list(set(video_ids))]
 text = '\n'.join(video_ids)
 
 with open('obama_addresses_html.txt', 'w') as f:
