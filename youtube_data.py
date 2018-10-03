@@ -7,10 +7,11 @@ import inflect
 import numpy as np
 
 def download(url):
-	cmd = 'youtube-dl -q -x --restrict-filenames --audio-format wav --audio-quality 0 --write-sub --write-auto-sub --sub-format vtt --id %s' % url
-	cmd = cmd.split(' ')
-	p = subprocess.Popen(cmd)
-	p.wait()
+	if not os.path.exists(url.split('=')[-1] + '.wav'):
+		cmd = 'youtube-dl -q -x --restrict-filenames --audio-format wav --audio-quality 0 --write-sub --write-auto-sub --sub-format vtt --id %s' % url
+		cmd = cmd.split(' ')
+		p = subprocess.Popen(cmd)
+		p.wait()
 
 def vtt2srt(file):
 	out_file = file.split('.en.vtt')[0] + '.srt'
