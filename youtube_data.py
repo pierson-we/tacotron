@@ -60,7 +60,7 @@ def parse_srt(seg_dict, file, min_duration):
 		while '' in seg_dict[file][count]['text']:
 			seg_dict[file][count]['text'].remove('')
 		seg_dict[file][count]['text'] = ' '.join(seg_dict[file][count]['text'])
-		if seg_dict[file][count]['text'].replace(' ', '') == '' or (to_sec - from_sec) < min_duration:
+		if seg_dict[file][count]['text'].replace(' ', '') == '' or (to_sec - from_sec) < min_duration or seg_dict[file][count]['text'].find('[') != -1:
 			del seg_dict[file][count]
 		count += 1
 	speakers = [speaker for speaker in speakers if speaker.strip() != '']
